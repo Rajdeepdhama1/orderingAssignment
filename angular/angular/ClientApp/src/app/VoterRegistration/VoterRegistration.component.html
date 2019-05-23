@@ -1,0 +1,46 @@
+<h2>Voter Registration</h2>
+<form id="OrderItemForm" (ngSubmit)="Save()">
+
+  <label>Country:</label>
+  <select [(ngModel)]="RegistrationModel.countryID" name="countryID" style="width:150px;margin-left:10px;" (ngModelChange)="getStates(RegistrationModel.countryID)">
+    <option value="" selected="selected"></option>
+    <option *ngFor="let country of countries" value="{{country.countryID}}">{{country.countryName}}</option>
+  </select>
+  <br /><br />
+
+
+  <label>State:</label>
+  <select [(ngModel)]="RegistrationModel.stateID" name="stateID" style="width:150px;margin-left:30px;" (ngModelChange)="getCities(RegistrationModel.stateID)">
+    <option value="" selected="selected"></option>
+    <option *ngFor="let state of states" value="{{state.stateID}}">{{state.stateName}}</option>
+  </select>
+  <br /><br />
+
+
+  <label>City:</label>
+  <select [(ngModel)]="RegistrationModel.cityID" name="cityID" style="width:150px;margin-left:39px;">
+    <option value="" selected="selected"></option>
+    <option *ngFor="let city of cities" value="{{city.cityID}}">{{city.cityName}}</option>
+  </select>
+  <br /><br />
+
+
+  <label> Name:</label>
+  <input [(ngModel)]="RegistrationModel.userName" name="userName" type="text" maxlength="50" style="width:150px;margin-left:30px;" />
+  <br /><br />
+
+  <label> Phone:</label>
+  <input [(ngModel)]="RegistrationModel.phone" name="phone" type="text" pattern="[0-9]{10}" title="should be number,max-length=10" style="width:150px;margin-left:25px;" />
+  <br /><br />
+
+  <label> Address:</label>
+  <input  [(ngModel)]="RegistrationModel.address" name="address" type="text" maxlength="100" style="width:150px;margin-left:13px;" />
+  <br /><br />
+
+
+  <input (click)="Save()" type="submit" class="btn-primary" value="Save" />
+</form>
+<br /><br />
+
+
+

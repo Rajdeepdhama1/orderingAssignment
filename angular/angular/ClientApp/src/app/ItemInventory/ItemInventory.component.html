@@ -1,0 +1,78 @@
+<h2>Item Inventory</h2>
+<p *ngIf="!Items"><em>Loading...</em></p>
+<form style="margin-top:40px;" id="ItemInventoryForm" (ngSubmit)="Save()" #heroForm="ngForm">
+  <label>Item:</label>
+  <select style="margin-left:40px;" [(ngModel)]="ItemInventoryModel.ItemID" required name="itemID" id="itemID" #ItemID="ngModel">
+    <option *ngFor="let item of Items" value="{{item.itemID}}">{{item.itemName}}</option>
+  </select>
+  <div [hidden]="ItemID.valid || ItemID.pristine"
+       class="alert alert-danger" style="width:200px;">
+    Item Name is required
+  </div>
+  <br /><br />
+
+  <label>Quantity:</label>
+  <input [(ngModel)]="ItemInventoryModel.ItemQuantity" required name="itemQuantity" id="itemQuantity" type="text"pattern="\d*" maxlength="5" style="width:65px;margin-left:10px;" #ItemQuantity="ngModel" />
+  <div [hidden]="ItemQuantity.valid || ItemQuantity.pristine"
+       class="alert alert-danger" style="width:220px;">
+    Required & must be number
+  </div>
+  <br /><br />
+
+  <label>Rate:</label>
+  <input [(ngModel)]="ItemInventoryModel.ItemRate" required name="itemRate" id="itemRate" type="text"pattern="\d*" maxlength="4"style="width:65px;margin-left:37px;" #ItemRate="ngModel" />
+  <div [hidden]="ItemRate.valid || ItemRate.pristine"
+       class="alert alert-danger" style="width:220px;">
+    Required & must be number
+  </div>
+  <br /><br />
+ <button type="submit" class="btn btn-primary" style="margin-left:110px;width:60px;" [disabled]="!heroForm.form.valid">Save</button>
+</form>
+<input [(ngModel)]="searchText" placeholder="Search.." style="margin-left:300px;" class="advancedSearchTextbox">
+<table class='table table-striped'>
+  <thead>
+    <tr>
+      <th>ItemInventoryID</th>
+      <th>Quantity</th>
+      <th>Rate</th>
+      <th>ItemName</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let obj of dtItems | filter: {itemInventoryID: searchText, itemQuantity:searchText,  itemRate: searchText, itemName:searchText}">
+      <td>{{ obj.itemInventoryID }}</td>
+      <td>{{ obj.itemQuantity }}</td>
+      <td>{{ obj.itemRate }}</td>
+      <td><a href="#" data-toggle="modal" data-target="#viewModal" (click)="openDetails(obj)">{{ obj.itemName }}</a></td>
+      <td>{{ obj.createDate| date:'dd/MM/yyyy'}}</td>
+    </tr>
+  </tbody>
+</table>
+<div class="modal" id="viewModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <form style="margin-top:40px;" id="PopupForm">
+        <button class="close" data-dismiss="modal" style="margin-right:20px;">&times;</button>
+        <div style="text-align:center;font-size:large">Do You Want To Edit?</div>
+        <hr />
+
+        <label  style="margin-left:70px;">Quantity:</label>
+        <input [(ngModel)]="UpdateItemModel.itemQuantity" name="itemQuantity" type="number"   style="width:65px;margin-left:10px;" required/>
+        <br /><br />
+        <label  style="margin-left:70px;">Rate:</label>
+        <input [(ngModel)]="UpdateItemModel.itemRate" name="itemRate" type="number"  style="width:65px;margin-left:37px;" required />
+        <br />
+
+        
+       <input (click)="Update()" type="button" data-dismiss="modal" class="btn-primary"  style="margin-left:270px;margin-bottom:20px;"   value="Update" />
+
+      </form>
+
+
+
+    </div>
+  </div>
+</div>
+

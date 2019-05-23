@@ -1,0 +1,46 @@
+<h2>Item Master</h2>
+<p *ngIf="!categories"><em>Loading...</em></p>
+<form style="margin-top:40px;" id="ItemForm" (ngSubmit)="Save()"#heroForm="ngForm">
+  <label>Category:</label>
+  <select style="margin-left:40px;" [(ngModel)]="ItemMasterModel.CategoryID" required name="categoryID" id="categoryID" #CategoryID="ngModel">
+    <option *ngFor="let category of categories" value="{{category.categoryID}}">{{category.categoryName}}</option>
+  </select>
+  <div [hidden]="CategoryID.valid || CategoryID.pristine"
+       class="alert alert-danger"style="width:200px;">
+    Category Name is required
+  </div>
+  <br /><br />
+
+  <label>Item Name:</label>
+  <input [(ngModel)]="ItemMasterModel.ItemName" required name="itemName" type="text" style="width:90px;margin-left:30px;" id="itemName" #ItemName="ngModel" />
+  <div [hidden]="ItemName.valid || ItemName.pristine"
+       class="alert alert-danger"style="width:200px;">
+    Item Name is required
+  </div>
+  <br /><br />
+
+  <button type="submit" class="btn btn-primary" style="margin-left:110px;width:60px;" [disabled]="!heroForm.form.valid">Save</button>
+
+</form>  
+<br /><br />
+<input [(ngModel)]="searchText" placeholder="Search.." style="margin-left:200px;"class="advancedSearchTextbox">
+
+<table class='table table-striped'>
+  <thead>
+    <tr>
+      <th>ItemID</th>
+      <th>Item Name</th>
+      <th>Category Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let obj of items | filter: {itemID: searchText, itemName:searchText,  categoryName: searchText}">
+      <td>{{ obj.itemID }}</td>
+      <td>{{ obj.itemName }}</td>
+      <td>{{ obj.categoryName }}</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
