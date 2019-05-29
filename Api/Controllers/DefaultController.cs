@@ -43,7 +43,12 @@ namespace Api.Controllers
             return dtItems;
         }
 
-
+        [HttpGet(Name = "GetCustomersList")]
+        public DataTable GetCustomersList(int id)
+        {
+            DataTable dtItems = new DataHelper().GetResults("SELECT TOP "+ id + " * FROM CustomerData");
+            return dtItems;
+        }
         [HttpPost(Name = "UpdateCustomerDetails")]
         public void UpdateCustomerDetails([FromBody] CustomerDataModel data)
         {
@@ -51,7 +56,13 @@ namespace Api.Controllers
             return;
         }
 
-      
+        [HttpPost(Name = "UpdateItemDetails")]
+        public void UpdateItemDetails([FromBody] ItemMasterModel data)
+        {
+            DataTable dtUsers = new DataHelper().PostValues("UPDATE ItemMaster SET ItemName='" + data.ItemName + "' WHERE ItemID='" + data.ItemID+ "'");
+            return;
+        }
+
 
         [HttpGet(Name = "GetItemInventory")]
         public DataTable GetItemInventory()

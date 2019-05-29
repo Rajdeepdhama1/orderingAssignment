@@ -16,7 +16,7 @@
 
 
   <label> Quantity:</label>
-  <input [(ngModel)]="ItemOrder.ItemOrderQuantity" type="number" min="0" max="50"id="itemQuantity" name="ItemOrderQuantity" style="width:82px;margin-left:10px;" (ngModelChange)="getPrice(ItemOrder.itemID)" />
+  <input [(ngModel)]="ItemOrder.ItemOrderQuantity" type="number" min="0"pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==5) return false;"id="itemQuantity" name="ItemOrderQuantity" style="width:82px;margin-left:10px;" (ngModelChange)="getPrice(ItemOrder.itemID)" />
   <br /><br />
 
 
@@ -42,7 +42,7 @@
   <tbody>
     <tr *ngFor="let Obj of arr;let RowIndex = index" (click)="LoadData(Obj)">
       <td>{{ Obj.customerID }}</td>
-      <td>{{ Obj.itemID }}</td>
+      <td>{{ Obj.ItemName }}</td>
       <td>{{ Obj.ItemOrderQuantity }}</td>
       <td>{{ Obj.TotalAmount }}</td>
       <td><input (click)="Delete(RowIndex)" type="button" class="btn-primary" value="Delete" /></td>

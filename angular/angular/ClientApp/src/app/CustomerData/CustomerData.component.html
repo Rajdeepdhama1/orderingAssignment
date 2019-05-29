@@ -10,14 +10,14 @@
   <br /><br />
 
   <label>Customer Email:</label>
-  <input [(ngModel)]="CustomerDataModel.CustomerEmail" required name="CustomerEmail" type="email" id="CustomerEmail" style="width:100px;margin-left:10px;" #CustomerEmail="ngModel" />
-  <div [hidden]="CustomerEmail.valid || CustomerEmail.pristine"
+  <input [(ngModel)]="CustomerDataModel.CustomerEmail" required name="CustomerEmail" type="email" id="CustomerEmail"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" style="width:100px;margin-left:10px;" #CustomerEmail="ngModel" />
+  <div [hidden]="CustomerEmail.valid || CustomerEmail.pristine || CustomerEmail.pattern"
        class="alert alert-danger" style="width:160px;">
     Email is required
   </div>
   <br /><br />
 
-  <button type="submit" class="btn btn-primary" style="margin-left:110px;width:60px;" [disabled]="!heroForm.form.valid">Save</button>
+  <button type="submit" class="btn btn-primary" style="margin-left:110px;width:60px;" [disabled]="!heroForm.form.valid || isDisabled">Save</button>
 
 </form>
 <br /><br />
@@ -31,7 +31,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let obj of items | filter: {customerID: searchText, customerName:searchText,  customerEmail: searchText}">
+    <tr *ngFor="let obj of itemsList | filter: {customerID: searchText, customerName:searchText,  customerEmail: searchText}">
       <td>{{ obj.customerID }}</td>
       <td><a (click)="SendData(obj)" style="cursor: pointer;">{{ obj.customerName }}</a></td>
       <td>{{ obj.customerEmail }}</td>

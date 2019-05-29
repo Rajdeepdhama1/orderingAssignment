@@ -8,8 +8,9 @@ import { HttpClient } from '@angular/common/http';
 export class ItemOrderComponent implements OnInit {
  
   public customers: any;
-  public arr: Array<{ customerID: number, itemID: number, ItemOrderQuantity: number, TotalAmount: number, id: number }> = [];
+  public arr: Array<{ customerID: number, itemID: number, ItemOrderQuantity: number, TotalAmount: number, id: number, ItemName: string }> = [];
   public orderedItems: any;
+  public iName: string;
  
   public ItemOrder = {
     OrderID: 0,
@@ -77,6 +78,11 @@ export class ItemOrderComponent implements OnInit {
 
   Add()
   {
+    for (let item of this.items) {
+      if (item.itemID == this.ItemOrder.itemID) {
+        this.iName = item.itemName;
+      }
+    }
     if (this.ItemOrder.customerID == 0 || this.ItemOrder.itemID == 0 || this.ItemOrder.ItemOrderQuantity == 0) {
     
       alert("Fill All the Inputs.")
@@ -88,7 +94,8 @@ export class ItemOrderComponent implements OnInit {
           itemID: this.ItemOrder.itemID,
           ItemOrderQuantity: this.ItemOrder.ItemOrderQuantity,
           TotalAmount: this.ItemOrder.TotalAmount,
-          id: this.arr.length + 1
+          id: this.arr.length + 1,
+          ItemName: this.iName
         })
       }
       else {
@@ -99,6 +106,7 @@ export class ItemOrderComponent implements OnInit {
             Array.ItemOrderQuantity = this.ItemOrder.ItemOrderQuantity;
             Array.TotalAmount = this.ItemOrder.TotalAmount;
             Array.id = this.ItemOrder.ID;
+            Array.ItemName = this.iName
           }
           else {
             console.log(this.ItemOrder.ID)
